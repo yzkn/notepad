@@ -1,5 +1,6 @@
 /* Copyright (c) 2023 YA-androidapp(https://github.com/yzkn) All rights reserved. */
 
+
 body {
     padding-top: 56px;
 }
@@ -7,6 +8,8 @@ body {
 main {
     display: flex;
     flex-wrap: nowrap;
+    font-family: "Source Code Pro", "Noto Sans JP", monospace !important;
+    font-size: 20px;
     height: 100vh;
     height: -webkit-fill-available;
     overflow-x: auto;
@@ -25,9 +28,8 @@ main>* {
 }
 
 #sidebar {
-    width: 320px;
-
     font-size: smaller;
+    width: 320px;
 }
 
 .white {
@@ -35,6 +37,11 @@ main>* {
 }
 
 #main-content {
-    width: 100%;
+    font-family: inherit;
     height: 100%;
+    width: 100%;
+}
+
+#fontsize {
+    width: 50%;
 }

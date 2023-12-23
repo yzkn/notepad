@@ -11,6 +11,11 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Source+Code+Pro&display=swap"
+        rel="stylesheet">
+
     <link href="css/app.css" rel="stylesheet">
 </head>
 
@@ -82,34 +87,73 @@
                             <div class="row my-2 d-flex">
                                 <div class="col-12 d-flex align-items-center">
                                     <input type="text" id="filename" class="form-control" aria-labelledby="Filename"
-                                        placeholder="Filename">
-                                </div>
-                            </div>
-                            <div class="row my-2 d-flex">
-                                <div class="col-2 d-flex align-items-center">
-                                    Load
-                                </div>
-                                <div class="col-10">
-                                    <button id="new" class="btn btn-info">New</button>
-                                    <button id="open" class="btn btn-info">Open</button>
-                                    <button id="upload" class="btn btn-info">Upload</button>
-                                </div>
-                            </div>
-                            <div class="row my-2 d-flex">
-                                <div class="col-2 d-flex align-items-center">
-                                    Save
-                                </div>
-                                <div class="col-10">
-                                    <button id="save" class="btn btn-info">Save</button>
-                                    <button id="download" class="btn btn-info">Download</button>
+                                        placeholder="Filename" autocomplete="on" list="keys"><datalist
+                                        id="keys"></datalist>
+                                    <button id="reload" class="btn btn-dark mx-1">
+                                        <i class="fa-solid fa-rotate-right"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                        <div class="row my-2 d-flex">
+                            <div class="col-2 d-flex align-items-center">
+                                Load
+                            </div>
+                            <div class="col-10">
+                                <button id="new" class="btn btn-info">New</button>
+                                <button id="load" class="btn btn-info">Load</button>
+                                <button id="upload" class="btn btn-info">Upload</button>
+                            </div>
+                        </div>
+                        <div class="row my-2 d-flex">
+                            <div class="col-2 d-flex align-items-center">
+                                Save
+                            </div>
+                            <div class="col-10">
+                                <button id="store" class="btn btn-info">Store</button>
+                                <button id="download" class="btn btn-info">Download</button>
+                            </div>
+                        </div>
+                        <div class="row my-2 d-flex">
+                            <div class="col-2 d-flex align-items-center">
+                                Font size
+                            </div>
+                            <div class="col-10">
+                                <select class="form-select" aria-label="Font size" id="fontsize" name="fontsize">
+                                    <option value="6">6px</option>
+                                    <option value="8">8px</option>
+                                    <option value="10">10px</option>
+                                    <option value="12">12px</option>
+                                    <option value="14">14px</option>
+                                    <option value="16">16px</option>
+                                    <option value="18">18px</option>
+                                    <option value="20" selected>20px</option>
+                                    <option value="22">22px</option>
+                                    <option value="24">24px</option>
+                                    <option value="26">26px</option>
+                                    <option value="28">28px</option>
+                                    <option value="30">30px</option>
+                                    <option value="32">32px</option>
+                                    <option value="34">34px</option>
+                                    <option value="36">36px</option>
+                                    <option value="38">38px</option>
+                                    <option value="40">40px</option>
+                                    <option value="44">44px</option>
+                                    <option value="48">48px</option>
+                                    <option value="52">52px</option>
+                                    <option value="56">56px</option>
+                                    <option value="60">60px</option>
+                                    <option value="64">64px</option>
+                                    <option value="72">72px</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </li>
-            </ul>
         </div>
-        <textarea id="main-content" class="form-control" placeholder=""></textarea>
+        </li>
+        </ul>
+        </div>
+        <textarea id="mainContent" class="form-control" placeholder=""></textarea>
     </main>
 
     <!-- Footer -->
