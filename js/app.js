@@ -218,6 +218,10 @@ const listFontFamilies = async () => {
 };
 
 
+let sidemenuStatus = true;
+let contentSaved = false; //TODO
+
+
 window.addEventListener('DOMContentLoaded', _ => {
 
     // test
@@ -225,7 +229,6 @@ window.addEventListener('DOMContentLoaded', _ => {
 
 
     // サイドメニュー
-    let sidemenuStatus = true;
     document.getElementById('toggle').addEventListener('click', () => {
         if (sidemenuStatus) {
             document.getElementsByTagName('main')[0].style.cssText = 'margin-left: -320px'
