@@ -130,6 +130,7 @@ const DEFAULT_FONT_FAMILIES = new Set([
     'Zapfino',
 
     // Google Fonts
+    'Noto Sans JP',
     'Source Code Pro'
 ].sort());
 
