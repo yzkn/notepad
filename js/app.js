@@ -136,14 +136,26 @@ const DEFAULT_FONT_FAMILIES = new Set([
 
 
 const lsTest = _ => {
-    localStorage.setItem(keyPrefix + 'copyright', 'Copyright (c) 2023 YA All rights reserved.');
-    localStorage.setItem(keyPrefix + 'markdown', '# Title\n\n----------\n\nContent');
+    // localStorage.clear();
+
+    if (!((keyPrefix + 'copyright.txt') in localStorage)) {
+        localStorage.setItem(keyPrefix + 'copyright.txt', 'Copyright (c) 2023 YA All rights reserved.');
+    }
+    if (!((keyPrefix + 'markdown.md') in localStorage)) {
+        localStorage.setItem(keyPrefix + 'markdown.md', '# Title\n\n----------\n\nContent');
+    }
+};
+
+
+const getTempFilename = (prefix, ext) => {
+    return prefix + Date.now() + ext;
 };
 
 
 const resetContent = () => {
     document.getElementById('mainContent').value = '';
 };
+
 
 const listLocalStorageKeys = () => {
     const datalist = document.getElementById('keys');
@@ -153,7 +165,7 @@ const listLocalStorageKeys = () => {
             const option = document.createElement('option');
             option.value = k.substring(keyPrefix.length);
             datalist.appendChild(option);
-            console.log(k, localStorage.getItem(k));
+            // console.log(k, localStorage.getItem(k));
         }
     });
 };
@@ -169,10 +181,10 @@ const removeFromLocalStorage = (key, allItems = false) => {
 };
 
 const loadFromLocalStorage = (key) => {
-    console.log('key', key);
+    // console.log('key', key);
     if (key !== '') {
         if (keyPrefix + key in localStorage) {
-            console.log('key', key, 'item', localStorage.getItem(keyPrefix + key));
+            // console.log('key', key, 'item', localStorage.getItem(keyPrefix + key));
             return localStorage.getItem(keyPrefix + key);
         }
     }
@@ -191,15 +203,18 @@ const saveToLocalStorage = (key, content) => {
     }
 };
 
-const uploadFile = () => {
-    ;
-
-    // document.getElementById('filename').value = '';
-};
 
 const downloadFile = (key, content) => {
-    if (key !== '') {
-        ;
+    if (key !== '' && content !== '') {
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.download = key;
+        a.href = url;
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
     }
 };
 
@@ -218,8 +233,27 @@ const listFontFamilies = async () => {
 };
 
 
+const contentChanged = (changed) => {
+    isContentChanged = changed;
+    document.title = 'notepad' + (changed && lastSavedContent !== document.getElementById('mainContent').value ? ' *' : '');
+
+    if (changed == false) {
+        lastSavedContent = document.getElementById('mainContent').value;
+    }
+};
+
+const updateFontFamily = _ => {
+    document.getElementById('mainContent').style.fontFamily = document.getElementById('fontFamily').value;
+};
+
+const updateFontSize = _ => {
+    document.getElementById('mainContent').style.fontSize = document.getElementById('fontsize').value;
+};
+
+
 let sidemenuStatus = true;
-let contentSaved = false; //TODO
+let isContentChanged = false;
+let lastSavedContent = '';
 
 
 window.addEventListener('DOMContentLoaded', _ => {
@@ -239,30 +273,117 @@ window.addEventListener('DOMContentLoaded', _ => {
         }
     });
 
-    document.getElementById('fontsize').addEventListener('change', () => {
-        document.getElementById('mainContent').style.fontSize = document.getElementById('fontsize').value;
+
+    // ショートカットキー
+    document.addEventListener('keydown', event => {
+        // console.log(event);
+        if (event.ctrlKey && event.altKey && event.code === 'KeyN') {
+            document.getElementById('new').dispatchEvent(new Event('click'));
+            event.preventDefault();
+        } else if (event.ctrlKey && event.altKey && event.code === 'KeyO') {
+            document.getElementById('load').dispatchEvent(new Event('click'));
+            event.preventDefault();
+        } else if (event.ctrlKey && event.code === 'KeyS') {
+            document.getElementById('store').dispatchEvent(new Event('click'));
+            event.preventDefault(); // ブラウザ既定のCtrl+Sを上書きするため
+        } else if (event.ctrlKey && event.altKey && event.code === 'KeyS') {
+            document.getElementById('store').dispatchEvent(new Event('click'));
+            event.preventDefault();
+        }
     });
 
 
-    document.getElementById('fontFamily').addEventListener('change', () => {
-        document.getElementById('mainContent').style.fontFamily = document.getElementById('fontFamily').value;
-    });
+    // 入力欄サイズ
+    const setTextareaSize = () => {
+        const mainContentElem = document.getElementById("mainContent");
+        const parentElem = mainContentElem.parentElement;
+        const h = parentElem.clientHeight;
+        const w = parentElem.clientWidth;
+
+        mainContentElem.setAttribute("width", w);
+        mainContentElem.setAttribute("height", h);
+        mainContentElem.style.width = w + "px";
+        mainContentElem.style.height = h + "px";
+    }
+    setTextareaSize();
 
 
-    // datalistの再読込
-    document.getElementById('reload').addEventListener('click', (event) => {
+    // フォント
+    document.getElementById('fontsize').addEventListener('change', updateFontSize);
+    document.getElementById('fontsize').addEventListener('keyup', updateFontSize);
+    document.getElementById('fontsize').addEventListener('mouseup', updateFontSize);
+
+    document.getElementById('fontFamily').addEventListener('change', updateFontFamily);
+    document.getElementById('fontFamily').addEventListener('keyup', updateFontFamily);
+    document.getElementById('fontFamily').addEventListener('mouseup', updateFontFamily);
+
+    // 再読込
+    document.getElementById('reload').addEventListener('click', _ => {
+        listFontFamilies();
         listLocalStorageKeys();
     });
-    listLocalStorageKeys();
-
     listFontFamilies();
+    listLocalStorageKeys();
 
 
     // ファイル
+    document.getElementById('mainContent').addEventListener('change', _ => { contentChanged(true) });
+    document.getElementById('mainContent').addEventListener('keyup', _ => { contentChanged(true) });
+    document.getElementById('mainContent').addEventListener('mouseup', _ => { contentChanged(true) });
+
+    document.getElementById('new').addEventListener('click', (event) => {
+
+        document.getElementById('filename').value = getTempFilename('Untitled_', '.txt');
+        document.getElementById('mainContent').value = '';
+        contentChanged(false);
+    });
+
     document.getElementById('load').addEventListener('click', (event) => {
-        let content = loadFromLocalStorage(document.getElementById('filename').value);
-        if (content) {
-            document.getElementById('mainContent').value = content;
+        let filename = document.getElementById('filename').value;
+        if (filename) {
+            let content = loadFromLocalStorage(filename);
+            if (content) {
+                document.getElementById('mainContent').value = content;
+                contentChanged(false);
+            }
+        } else {
+            document.getElementById('filename').focus();
         }
+    });
+
+    document.getElementById('upload').addEventListener('change', (event) => {
+        let file = event.target;
+        let reader = new FileReader();
+        reader.readAsText(file.files[0]);
+        reader.onload = function () {
+            document.getElementById('mainContent').value = reader.result;
+            document.getElementById('filename').value = file.files[0].name;
+            contentChanged(false);
+        };
+    });
+
+    document.getElementById('store').addEventListener('click', (event) => {
+        let filename = document.getElementById('filename').value;
+        if (filename) {
+            let mainContent = document.getElementById('mainContent').value;
+
+            saveToLocalStorage(filename, mainContent);
+            contentChanged(false);
+        } else {
+            document.getElementById('filename').focus();
+        }
+    });
+
+    document.getElementById('download').addEventListener('click', (event) => {
+        let filename = document.getElementById('filename').value;
+        let mainContent = document.getElementById('mainContent').value;
+
+        if (filename !== '') {
+            filename = getTempFilename('', '.txt');
+        }
+
+        saveToLocalStorage(filename, mainContent);
+        downloadFile(filename, mainContent);
+        contentChanged(false);
     });
 });

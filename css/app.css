@@ -1,6 +1,11 @@
 /* Copyright (c) 2023 YA-androidapp(https://github.com/yzkn) All rights reserved. */
 
 
+html,
+body {
+    height: 100%;
+}
+
 body {
     padding-top: 56px;
 }
@@ -40,4 +45,8 @@ main>* {
     font-family: inherit;
     height: 100%;
     width: 100%;
+}
+
+input[type=file] {
+    display: none;
 }

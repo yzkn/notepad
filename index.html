@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="ja">
 
 <head>
@@ -96,22 +97,23 @@
                             </div>
                         </div>
                         <div class="row my-2 d-flex">
-                            <div class="col-2 d-flex align-items-center">
-                                Load
+                            <div class="col-2 d-flex align-items-center" title="Local storage">
+                                LS
                             </div>
                             <div class="col-10">
                                 <button id="new" class="btn btn-info">New</button>
                                 <button id="load" class="btn btn-info">Load</button>
-                                <button id="upload" class="btn btn-info">Upload</button>
+                                <button id="store" class="btn btn-info">Store</button>
                             </div>
                         </div>
                         <div class="row my-2 d-flex">
-                            <div class="col-2 d-flex align-items-center">
-                                Save
+                            <div class="col-2 d-flex align-items-center" title="Local file">
+                                File
                             </div>
                             <div class="col-10">
-                                <button id="store" class="btn btn-info">Store</button>
-                                <button id="download" class="btn btn-info">Download</button>
+                                <label><span class="btn btn-secondary">Upload<input type="file"
+                                            id="upload"></span></label>
+                                <button id="download" class="btn btn-secondary">Download</button>
                             </div>
                         </div>
                         <div class="row my-2 d-flex">
@@ -120,31 +122,26 @@
                             </div>
                             <div class="col-10">
                                 <select class="form-select" aria-label="Font size" id="fontsize" name="fontsize">
-                                    <option value="6">6px</option>
-                                    <option value="8">8px</option>
-                                    <option value="10">10px</option>
-                                    <option value="12">12px</option>
-                                    <option value="14">14px</option>
-                                    <option value="16">16px</option>
-                                    <option value="18">18px</option>
-                                    <option value="20" selected>20px</option>
-                                    <option value="22">22px</option>
-                                    <option value="24">24px</option>
-                                    <option value="26">26px</option>
-                                    <option value="28">28px</option>
-                                    <option value="30">30px</option>
-                                    <option value="32">32px</option>
-                                    <option value="34">34px</option>
-                                    <option value="36">36px</option>
-                                    <option value="38">38px</option>
-                                    <option value="40">40px</option>
-                                    <option value="44">44px</option>
-                                    <option value="48">48px</option>
-                                    <option value="52">52px</option>
-                                    <option value="56">56px</option>
-                                    <option value="60">60px</option>
-                                    <option value="64">64px</option>
-                                    <option value="72">72px</option>
+                                    <option value="6px">6px</option>
+                                    <option value="8px">8px</option>
+                                    <option value="10px">10px</option>
+                                    <option value="12px">12px</option>
+                                    <option value="14px">14px</option>
+                                    <option value="16px">16px</option>
+                                    <option value="18px">18px</option>
+                                    <option value="20px" selected>20px</option>
+                                    <option value="24px">24px</option>
+                                    <option value="28px">28px</option>
+                                    <option value="32px">32px</option>
+                                    <option value="36px">36px</option>
+                                    <option value="40px">40px</option>
+                                    <option value="48px">48px</option>
+                                    <option value="56px">56px</option>
+                                    <option value="72px">72px</option>
+                                    <option value="100px">100px</option>
+                                    <option value="200px">200px</option>
+                                    <option value="300px">300px</option>
+                                    <option value="400px">400px</option>
                                 </select>
                             </div>
                         </div>
