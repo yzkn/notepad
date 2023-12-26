@@ -250,6 +250,12 @@ const updateFontSize = _ => {
     document.getElementById('mainContent').style.fontSize = document.getElementById('fontsize').value;
 };
 
+const updateColors = _ => {
+    document.getElementById('mainContent').style.color = document.getElementById('foreColor').value;
+    document.getElementById('mainContent').style.backgroundColor = document.getElementById('backColor').value;
+    document.getElementById('mainContent').style.borderColor = document.getElementById('backColor').value;
+};
+
 
 let sidemenuStatus = true;
 let isContentChanged = false;
@@ -324,6 +330,9 @@ window.addEventListener('DOMContentLoaded', _ => {
     });
     listFontFamilies();
     listLocalStorageKeys();
+
+    document.getElementById('foreColor').addEventListener('change', updateColors);
+    document.getElementById('backColor').addEventListener('change', updateColors);
 
 
     // ファイル
